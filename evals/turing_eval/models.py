@@ -78,7 +78,9 @@ def completion_query(
     inputs = tokenizer(actual_prompt, return_tensors="pt").input_ids
 
     # Run completion
-    outputs = model.generate(input_ids=inputs, return_dict_in_generate=True, **kwargs)
+    outputs = model.generate(
+        input_ids=inputs, return_dict_in_generate=True, output_scores=True, **kwargs
+    )
 
     print(outputs)
 
@@ -213,7 +215,6 @@ def sample_freeform(
         num_return_sequences=n_samples if n_samples else 1,
         max_new_tokens=max_tokens,
         top_p=top_p,
-        output_scores=True,
     )
 
     if n_samples is None:
