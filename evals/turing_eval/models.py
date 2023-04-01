@@ -1,5 +1,6 @@
-import os
-from dotenv import load_dotenv, find_dotenv
+# import os
+
+# from dotenv import load_dotenv, find_dotenv
 
 """
 This file provides common interfaces and utilities used by eval creators to
@@ -27,9 +28,9 @@ from transformers import AutoModel, AutoTokenizer, OpenAIGPTLMHeadModel
 
 logger = logging.getLogger(__name__)
 
-# load openai key
-load_dotenv(find_dotenv())
-OPENAI_KEY = os.environ["OPENAI_KEY"]
+# # load openai key
+# load_dotenv(find_dotenv())
+# OPENAI_KEY = os.environ["OPENAI_KEY"]
 
 
 def completion_query(
@@ -65,6 +66,7 @@ def completion_query(
     tokenizer = AutoTokenizer.from_pretrained(model_spec.name)
 
     assert type(prompt) == str, "prompt is not type str, need to parse string"
+    print("TEST")
 
     inputs = tokenizer(prompt, return_tensors="pt").input_ids
 

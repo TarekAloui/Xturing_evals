@@ -29,3 +29,4 @@ dependencies = [
 [project.scripts]
 oaieval = "evals.cli.oaieval:main"
 oaievalset = "evals.cli.oaievalset:main"
+oaieval_custom = "evals.cli.oaieval_custom:main"
