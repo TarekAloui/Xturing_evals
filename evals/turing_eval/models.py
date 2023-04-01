@@ -20,7 +20,7 @@ from evals.prompt.base import (
 )
 from evals.record import record_match, record_sampling
 
-from transformers import AutoModel, AutoTokenizer, OpenAIGPTLMHeadModel
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
 logger = logging.getLogger(__name__)
 
@@ -68,7 +68,7 @@ def completion_query(
     # Initialize model
     # TODO: pass kwargs to model!
     print(f"MODEL: {model_spec.name}")
-    model = OpenAIGPTLMHeadModel.from_pretrained(model_spec.name)
+    model = AutoModelForCausalLM.from_pretrained(model_spec.name)
     tokenizer = AutoTokenizer.from_pretrained(model_spec.name)
 
     # TODO: is concatenating the contents a good solution to transform chat-style inputs to one string?
