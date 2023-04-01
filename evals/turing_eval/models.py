@@ -19,10 +19,6 @@ from evals.prompt.base import (
     Prompt,
 )
 from evals.record import record_match, record_sampling
-from evals.utils.api_utils import (
-    openai_chat_completion_create_retrying,
-    openai_completion_create_retrying,
-)
 
 from transformers import AutoModel, AutoTokenizer, OpenAIGPTLMHeadModel
 
@@ -64,6 +60,8 @@ def completion_query(
     # TODO: pass kwargs to model!
     model = OpenAIGPTLMHeadModel.from_pretrained(model_spec.name)
     tokenizer = AutoTokenizer.from_pretrained(model_spec.name)
+
+    print(prompt)
 
     assert type(prompt) == str, "prompt is not type str, need to parse string"
     print("TEST")
