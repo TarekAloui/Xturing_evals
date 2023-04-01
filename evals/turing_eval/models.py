@@ -80,6 +80,8 @@ def completion_query(
     # Run completion
     outputs = model.generate(input_ids=inputs, return_dict_in_generate=True, **kwargs)
 
+    print(outputs)
+
     # parse results
     result = {
         "text": tokenizer.batch_decode(outputs.sequences, skip_special_tokens=True),
