@@ -69,7 +69,7 @@ def completion_query(
     # TODO: pass kwargs to model!
     print(f"MODEL: {model_spec.name}")
     model = AutoModelForCausalLM.from_pretrained(model_spec.name)
-    tokenizer = AutoTokenizer.from_pretrained(model_spec.name)
+    tokenizer = AutoTokenizer.from_pretrained(model_spec.name, return_tensors="pt")
 
     # TODO: is concatenating the contents a good solution to transform chat-style inputs to one string?
     actual_prompt = chat_prompt_to_text(prompt)
