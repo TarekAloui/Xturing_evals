@@ -67,6 +67,7 @@ def completion_query(
 
     # Initialize model
     # TODO: pass kwargs to model!
+    print(f"MODEL: {model_spec.name}")
     model = OpenAIGPTLMHeadModel.from_pretrained(model_spec.name)
     tokenizer = AutoTokenizer.from_pretrained(model_spec.name)
 
@@ -88,7 +89,7 @@ def completion_query(
         ),
     }
     # TODO: change metadata based on model
-    metadata = {"model": "gpt2"}
+    metadata = {"model": model_spec.name}
 
     return result, actual_prompt, metadata
 
