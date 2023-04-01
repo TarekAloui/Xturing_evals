@@ -28,6 +28,15 @@ logger = logging.getLogger(__name__)
 # load_dotenv(find_dotenv())
 # OPENAI_KEY = os.environ["OPENAI_KEY"]
 
+# HELPER FUNCTIONS
+
+
+def chat_prompt_to_text(prompt):
+    if type(prompt) == str:
+        return prompt
+    else:
+        return " ".join([message["content"] for message in prompt])
+
 
 def completion_query(
     model_spec: ModelSpec,
@@ -61,12 +70,11 @@ def completion_query(
     model = OpenAIGPTLMHeadModel.from_pretrained(model_spec.name)
     tokenizer = AutoTokenizer.from_pretrained(model_spec.name)
 
-    print(prompt)
+    # TODO: is concatenating the contents a good solution to transform chat-style inputs to one string?
+    actual_prompt = chat_prompt_to_text(prompt)
+    print(actual_prompt)
 
-    assert type(prompt) == str, "prompt is not type str, need to parse string"
-    print("TEST")
-
-    inputs = tokenizer(prompt, return_tensors="pt").input_ids
+    inputs = tokenizer(actual_prompt, return_tensors="pt").input_ids
 
     # Run completion
     outputs = model.generate(input_ids=inputs, return_dict_in_generate=True, **kwargs)
@@ -79,8 +87,6 @@ def completion_query(
             outputs.sequences, outputs.scores, normalize_logits=True
         ),
     }
-    # leave unchange since we do not change the prompt structure (like OpenAI's chat structure)
-    actual_prompt = prompt
     # TODO: change metadata based on model
     metadata = {"model": "gpt2"}
 
