@@ -21,8 +21,9 @@ from evals.prompt.base import (
 from evals.record import record_match, record_sampling
 
 from transformers import AutoModelForCausalLM, AutoTokenizer
-from xturing.datasets.instruction_dataset import InstructionDataset
-from xturing.models.base import BaseModel
+
+# from xturing.datasets.instruction_dataset import InstructionDataset
+# from xturing.models.base import BaseModel
 
 logger = logging.getLogger(__name__)
 
