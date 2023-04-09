@@ -49,7 +49,7 @@ def load_model(model_name):
         model = BaseModel.create(model_name)
         model.save(f"./{model_name}")
 
-    return model.load(f"./{model_name}")
+    return BaseModel.load(f"./{model_name}")
 
 
 def completion_query(
