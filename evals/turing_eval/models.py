@@ -8,6 +8,7 @@ sample from models and process the results.
 """
 
 import logging
+import os
 from typing import Callable, Optional, Union
 
 from evals.base import ModelSpec
@@ -41,6 +42,16 @@ def chat_prompt_to_text(prompt):
         return " ".join([message["content"] for message in prompt])
 
 
+def load_model(model_name):
+
+    if not os.path.exists(f"./{model_name}"):
+        print(f"LOADING MODEL: {model_name}")
+        model = BaseModel.create(model_name)
+        model.save(f"./{model_name}")
+
+    return model.load(f"./{model_name}")
+
+
 def completion_query(
     model_spec: ModelSpec,
     prompt: Union[OpenAICreatePrompt, OpenAICreateChatPrompt, Prompt],
@@ -70,7 +81,6 @@ def completion_query(
 
     # Initialize model
     # TODO: pass kwargs to model!
-    print(f"MODEL: {model_spec.name}")
 
     # model = AutoModelForCausalLM.from_pretrained(model_spec.name)
 
@@ -93,7 +103,7 @@ def completion_query(
 
     actual_prompt = chat_prompt_to_text(prompt)
 
-    model = BaseModel.create(model_spec.name)
+    model = load_model(model_spec.name)
 
     text_out = model.generate(texts=[actual_prompt])
 
