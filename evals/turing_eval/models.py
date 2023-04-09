@@ -109,7 +109,7 @@ def completion_query(
 
     # parse results
     result = {
-        "text": [text_out],
+        "text": text_out,
         "tokens": None,
         "logprobs": None,
     }
