@@ -22,8 +22,8 @@ from evals.record import record_match, record_sampling
 
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-# from xturing.datasets.instruction_dataset import InstructionDataset
-# from xturing.models.base import BaseModel
+from xturing.datasets.instruction_dataset import InstructionDataset
+from xturing.models.base import BaseModel
 
 logger = logging.getLogger(__name__)
 
@@ -72,33 +72,36 @@ def completion_query(
     # TODO: pass kwargs to model!
     print(f"MODEL: {model_spec.name}")
 
-    model = AutoModelForCausalLM.from_pretrained(model_spec.name)
+    # model = AutoModelForCausalLM.from_pretrained(model_spec.name)
 
     # huggingface_models = ["gpt2"]
 
     # if model_spec.name in huggingface_models:
     #     model = AutoModelForCausalLM.from_pretrained(model_spec.name)
     # else:
-    #     model = model = BaseModel.load(model_spec.name)
-    tokenizer = AutoTokenizer.from_pretrained(model_spec.name, return_tensors="pt")
+    #     model = BaseModel.load(model_spec.name)
+    # tokenizer = AutoTokenizer.from_pretrained(model_spec.name, return_tensors="pt")
 
     # TODO: is concatenating the contents a good solution to transform chat-style inputs to one string?
-    actual_prompt = chat_prompt_to_text(prompt)
 
-    inputs = tokenizer(actual_prompt, return_tensors="pt").input_ids
+    # inputs = tokenizer(actual_prompt, return_tensors="pt").input_ids
 
     # Run completion
-    outputs = model.generate(
-        input_ids=inputs, return_dict_in_generate=True, output_scores=True, **kwargs
-    )
+    # outputs = model.generate(
+    #     input_ids=inputs, return_dict_in_generate=True, output_scores=True, **kwargs
+    # )
+
+    actual_prompt = chat_prompt_to_text(prompt)
+
+    model = BaseModel.load(model_spec.name)
+
+    text_out = model.generate(texts=[actual_prompt])
 
     # parse results
     result = {
-        "text": tokenizer.batch_decode(outputs.sequences, skip_special_tokens=True),
-        "tokens": outputs.sequences,
-        "logprobs": model.compute_transition_scores(
-            outputs.sequences, outputs.scores, normalize_logits=True
-        ),
+        "text": [text_out],
+        "tokens": None,
+        "logprobs": None,
     }
     # TODO: change metadata based on model
     metadata = {"model": model_spec.name}
