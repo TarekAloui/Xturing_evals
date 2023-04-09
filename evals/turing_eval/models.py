@@ -93,7 +93,7 @@ def completion_query(
 
     actual_prompt = chat_prompt_to_text(prompt)
 
-    model = BaseModel.load(model_spec.name)
+    model = BaseModel.create(model_spec.name)
 
     text_out = model.generate(texts=[actual_prompt])
 
