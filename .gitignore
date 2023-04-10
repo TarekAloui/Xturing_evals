@@ -2,3 +2,5 @@ __pycache__/
 evals.egg-info/
 .vscode/
 .env
+evals/registry/data/
+*.DS_Store
