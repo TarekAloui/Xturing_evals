@@ -103,6 +103,8 @@ def completion_query(
 
     actual_prompt = chat_prompt_to_text(prompt)
 
+    # TODO add config
+
     model = load_model(model_spec.name)
 
     text_out = model.generate(texts=[actual_prompt])
