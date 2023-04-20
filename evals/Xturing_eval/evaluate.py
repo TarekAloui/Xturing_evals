@@ -235,6 +235,10 @@ def evaluate(
         filename=args.log_to_file if args.log_to_file else None,
     )
 
+    logging.getLogger("openai").setLevel(logging.WARN)
+    if hasattr(openai.error, "set_display_cause"):
+        openai.error.set_display_cause()
+
     run_evaluation(args)
 
 
