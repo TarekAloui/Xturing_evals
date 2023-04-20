@@ -226,7 +226,7 @@ def evaluate(
         dry_run_logging=dry_run_logging,
     )
 
-    args_parsed = parser.parse_args()
+    # args_parsed = parser.parse_args()
 
     # Running evaluation code
     logging.basicConfig(
@@ -235,7 +235,7 @@ def evaluate(
         filename=args.log_to_file if args.log_to_file else None,
     )
 
-    run_evaluation(args_parsed)
+    run_evaluation(args)
 
 
 ####################################
